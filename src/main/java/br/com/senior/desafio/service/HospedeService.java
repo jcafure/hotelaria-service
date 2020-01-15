@@ -2,6 +2,7 @@ package br.com.senior.desafio.service;
 
 import br.com.senior.desafio.model.Hospede;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface HospedeService {
@@ -12,6 +13,8 @@ public interface HospedeService {
 
     Optional<Hospede> update(Hospede hospede);
 
-    void delete(Hospede hospede);
+    void delete(Integer id);
+
+    Iterable<Hospede> findAll();
 
 }

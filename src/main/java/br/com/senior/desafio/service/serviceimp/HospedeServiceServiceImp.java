@@ -7,6 +7,7 @@ import br.com.senior.desafio.service.HospedeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -34,18 +35,21 @@ public class HospedeServiceServiceImp implements HospedeService {
         Optional<Hospede> optionalHospede = findById(hospede.getId());
 
         if (optionalHospede.isPresent()) {
-            buildHospede(hospede);
+            hospedeRepository.save(buildHospede(hospede));
         } else {
             throw new HospedeException(hospede.getId());
         }
-
         return Optional.ofNullable(hospede);
     }
 
+    @Override
+    public void delete(Integer id) {
+        hospedeRepository.deleteById(id);
+    }
 
     @Override
-    public void delete(Hospede hospede) {
-        hospedeRepository.delete(hospede);
+    public Iterable<Hospede> findAll() {
+        return hospedeRepository.findAll();
     }
 
     private Hospede buildHospede(Hospede hospede) {

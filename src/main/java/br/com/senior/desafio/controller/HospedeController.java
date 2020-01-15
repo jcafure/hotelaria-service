@@ -47,10 +47,21 @@ public class HospedeController {
         }
     }
 
-    @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<?> getModel() {
-        Hospede hospedeToJson = new Hospede();
-        return ResponseEntity.ok(hospedeToJson);
+    @DeleteMapping(value = "/delete/{id}")
+    public ResponseEntity<?> delete(@PathVariable("id") Integer id){
+        try{
+            hospedeService.delete(id);
+            return ResponseEntity.ok().build();
+        } catch (HospedeException e) {
+            throw new HospedeException(id);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Houve um erro na busca dos dados. ", HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<?> findAll() {
+        return ResponseEntity.ok(hospedeService.findAll());
     }
 
 }
