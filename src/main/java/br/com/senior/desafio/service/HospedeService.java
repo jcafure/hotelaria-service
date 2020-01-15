@@ -4,7 +4,7 @@ import br.com.senior.desafio.model.Hospede;
 
 import java.util.Optional;
 
-public interface IHospede {
+public interface HospedeService {
 
     Optional<Hospede> findById(Integer id);
 

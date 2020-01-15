@@ -7,5 +7,4 @@ import org.springframework.stereotype.Service;
 @Service
 public interface HospedeRepository extends JpaRepository<Hospede, Integer> {
 
-
 }
