@@ -12,8 +12,11 @@ import org.springframework.stereotype.Service;
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 public class CheckinServiceImp implements CheckinService {
@@ -47,6 +50,16 @@ public class CheckinServiceImp implements CheckinService {
         checkin.setAdicionaVeiculo(checkin.isAdicionaVeiculo());
 
         return checkin;
+    }
+
+    private Double calcularValor(Checkin checkin) {
+        LocalDateTime dataInicio = checkin.getDataCheckin();
+        LocalDateTime dataFim = checkin.getDataCheckout();
+        List<LocalDateTime> diasHospedado = Stream.iterate(dataInicio, start -> start.plusDays(1)).limit(ChronoUnit.DAYS.between(dataInicio, dataFim)).collect(Collectors.toList());
+        Double valorFimDeSemana = valorDiariasFimDeSemana(diasHospedado, dataFim, checkin.isAdicionaVeiculo());
+        Double valorDeSemana = valorDiariasDaSemana(diasHospedado, checkin.isAdicionaVeiculo());
+
+        return valorFimDeSemana + valorDeSemana;
     }
 
     private Double valorDiariasFimDeSemana(List<LocalDateTime> diariasHospedagem, LocalDateTime dataFim, boolean adicionalVeiculo) {
