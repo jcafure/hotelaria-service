@@ -7,14 +7,14 @@ import java.util.Optional;
 
 public interface HospedeService {
 
-    Optional<Hospede> findById(Integer id);
+    Optional<Hospede> recuperaHospedePeloId(Integer id);
 
-    Optional<Hospede> save(Hospede hospede);
+    Optional<Hospede> salvarHospede(Hospede hospede);
 
-    Optional<Hospede> update(Hospede hospede);
+    Optional<Hospede> atualizarHospede(Hospede hospede);
 
-    void delete(Integer id);
+    void deletarHospede(Integer id);
 
-    Iterable<Hospede> findAll();
+    Iterable<Hospede> listarHospedes();
 
 }

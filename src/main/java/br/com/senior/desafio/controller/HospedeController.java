@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/hospede")
+@RequestMapping("/hospedes")
 public class HospedeController {
 
     private final HospedeService hospedeService;
@@ -24,7 +24,7 @@ public class HospedeController {
     @PostMapping("/novo-hospede")
     public ResponseEntity<?> novoHospede (@RequestBody Hospede hospede) {
         try {
-            Optional<Hospede> novoHospede = hospedeService.save(hospede);
+            Optional<Hospede> novoHospede = hospedeService.salvarHospede(hospede);
             return ResponseEntity.ok(novoHospede.get());
         }catch (HospedeException e) {
             throw new HospedeException(e.getMessage());
@@ -36,7 +36,7 @@ public class HospedeController {
     @PutMapping("/atualiza-hospede")
     public ResponseEntity<?> atualizaHospede (@RequestBody Hospede hospede) {
        try{
-           Optional<Hospede> hospedeOptionalAtual = hospedeService.update(hospede);
+           Optional<Hospede> hospedeOptionalAtual = hospedeService.atualizarHospede(hospede);
            return ResponseEntity.ok(hospedeOptionalAtual.get());
 
         }catch (HospedeException e) {
@@ -47,10 +47,10 @@ public class HospedeController {
         }
     }
 
-    @DeleteMapping(value = "/delete/{id}")
-    public ResponseEntity<?> delete(@PathVariable("id") Integer id){
+    @DeleteMapping(value = "/deletar-hospede/{id}")
+    public ResponseEntity<?> deletarHospede(@PathVariable("id") Integer id){
         try{
-            hospedeService.delete(id);
+            hospedeService.deletarHospede(id);
             return ResponseEntity.ok().build();
         } catch (HospedeException e) {
             throw new HospedeException(id);
@@ -59,9 +59,9 @@ public class HospedeController {
         }
     }
 
-    @GetMapping("/all")
-    public ResponseEntity<?> findAll() {
-        return ResponseEntity.ok(hospedeService.findAll());
+    @GetMapping("/listar-hospedes")
+    public ResponseEntity<?> listarHospedes() {
+        return ResponseEntity.ok(hospedeService.listarHospedes());
     }
 
 }

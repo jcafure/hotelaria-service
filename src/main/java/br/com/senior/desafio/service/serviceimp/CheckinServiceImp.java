@@ -38,7 +38,7 @@ public class CheckinServiceImp implements CheckinService {
 
     private Checkin buildCheckin(Checkin checkin) {
 
-        Optional<Hospede> hospedeOptional = hospedeService.findById(checkin.getHospede().getId());
+        Optional<Hospede> hospedeOptional = hospedeService.recuperaHospedePeloId(checkin.getHospede().getId());
         if (hospedeOptional.isPresent()) {
             checkin.setHospede(hospedeOptional.isPresent() ? hospedeOptional.get() : null);
         } else {
