@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Data
@@ -18,22 +20,27 @@ public class Checkin implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date dataEntrada;
+    @Column(nullable = false)
+    private LocalDateTime dataCheckin;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date dataSaida;
+    @Column(nullable = false)
+    private LocalDateTime dataCheckout;
 
     private double valorDiaria;
-
+    private double valorDiariaFimDeSemana;
     private double valorTotal;
-
-    private double valorDaUltimaHospedagem;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "hospede_id")
     private Hospede hospede;
 
     private boolean adicionaVeiculo;
-
+//
+//    public boolean isAdicionaVeiculo() {
+//        return adicionaVeiculo;
+//    }
+//
+//    public void setAdicionaVeiculo(boolean adicionaVeiculo) {
+//        this.adicionaVeiculo = adicionaVeiculo;
+//    }
 }
