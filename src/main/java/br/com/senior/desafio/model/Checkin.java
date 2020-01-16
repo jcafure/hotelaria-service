@@ -20,14 +20,12 @@ public class Checkin implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(nullable = false)
+    @Column(name = "dataEntrada", nullable = false)
     private LocalDateTime dataCheckin;
 
-    @Column(nullable = false)
+    @Column(name = "dataSaida")
     private LocalDateTime dataCheckout;
 
-    private double valorDiaria;
-    private double valorDiariaFimDeSemana;
     private double valorTotal;
 
     @OneToOne(cascade = CascadeType.ALL)
@@ -35,6 +33,8 @@ public class Checkin implements Serializable {
     private Hospede hospede;
 
     private boolean adicionaVeiculo;
+
+    private boolean checkout;
 //
 //    public boolean isAdicionaVeiculo() {
 //        return adicionaVeiculo;
