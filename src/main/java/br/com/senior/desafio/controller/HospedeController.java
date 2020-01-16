@@ -33,6 +33,12 @@ public class HospedeController {
         }
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<?> hospedePeloid (@PathVariable("id") Integer id) {
+        Optional<Hospede> optionalBebida = hospedeService.recuperaHospedePeloId(id);
+        return ResponseEntity.ok(optionalBebida.isPresent() ? optionalBebida.get() : "Hospede não encontrado! " );
+    }
+
     @PutMapping("/atualiza-hospede")
     public ResponseEntity<?> atualizaHospede (@RequestBody Hospede hospede) {
        try{
