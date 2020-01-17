@@ -14,8 +14,8 @@ public interface CheckinService {
 
     Optional<Checkin> getCheckinPeloId(Integer id);
 
-    List<Checkin> buscarTodosHospedados();
+    List<Checkin> buscarTodosOsHospedesComCheckoutFalse();
 
-    List<Checkin> buscarTodosHospedesComCheckinEComCheckout();
+    List<Checkin> buscarTodosOsHospedesComCheckoutTrue();
 
 }

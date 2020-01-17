@@ -1,5 +1,6 @@
 package br.com.senior.desafio.service.serviceimp;
 
+import br.com.senior.desafio.exception.HistoricoException;
 import br.com.senior.desafio.model.Historico;
 import br.com.senior.desafio.repository.HistoricoRepository;
 import br.com.senior.desafio.service.HistoricoService;
@@ -20,6 +21,14 @@ public class HistoricoServiceImp implements HistoricoService {
 
     @Override
     public Optional<Historico> getHistoricoPorHospede(Integer idHospede) {
-        return historicoRepository.getHistoricoByHospede(idHospede);
+        try {
+            Optional<Historico> historicoOptional = historicoRepository.getHistoricoByHospede(idHospede);
+            if (historicoOptional.isPresent()) {
+                return historicoRepository.getHistoricoByHospede(idHospede);
+            }
+        }catch (HistoricoException e) {
+            throw new HistoricoException(e.getMessage());
+        }
+        return Optional.empty();
     }
 }

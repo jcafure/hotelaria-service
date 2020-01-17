@@ -83,12 +83,12 @@ public class CheckinServiceImp implements CheckinService {
     }
 
     @Override
-    public List<Checkin> buscarTodosHospedados() {
+    public List<Checkin> buscarTodosOsHospedesComCheckoutFalse() {
         return checkinRepository.buscarTodosHospedados();
     }
 
     @Override
-    public List<Checkin> buscarTodosHospedesComCheckinEComCheckout() {
+    public List<Checkin> buscarTodosOsHospedesComCheckoutTrue() {
         List<Checkin> hospedesComCheckinECheckout = checkinRepository.buscarTodosHospedesComCheckinEComCheckout();
         if (!hospedesComCheckinECheckout.isEmpty()) {
             return checkinRepository.buscarTodosHospedesComCheckinEComCheckout();

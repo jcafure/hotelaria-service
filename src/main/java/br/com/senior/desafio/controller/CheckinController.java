@@ -23,7 +23,7 @@ public class CheckinController {
     }
 
     @PostMapping("/checkin-entrada")
-    public ResponseEntity<?> checkin (@RequestBody Checkin checkin) {
+    public ResponseEntity<?> checkin(@RequestBody Checkin checkin) {
         try {
             Optional<Checkin> checkinResponse = checkinService.checkinEntrada(checkin);
             return ResponseEntity.ok(checkinResponse.get());
@@ -35,13 +35,13 @@ public class CheckinController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> checkinPeloId (@PathVariable("id") Integer id) {
+    public ResponseEntity<?> checkinPeloId(@PathVariable("id") Integer id) {
         Optional<Checkin> optionalBebida = checkinService.getCheckinPeloId(id);
         return ResponseEntity.ok(optionalBebida.isPresent() ? optionalBebida.get() : "Checkin não encontrado! " );
     }
 
     @PutMapping("/checkout")
-    public ResponseEntity<?> checkout (@RequestBody Checkin checkin) {
+    public ResponseEntity<?> checkout(@RequestBody Checkin checkin) {
         try {
             Optional<Checkin> checkinResponse = checkinService.checkinSaida(checkin);
             return ResponseEntity.ok(checkinResponse.get());
@@ -53,9 +53,9 @@ public class CheckinController {
     }
 
     @GetMapping("/todos-hospedados")
-    public ResponseEntity<?> todosHospedados () {
+    public ResponseEntity<?> todosHospedados() {
         try {
-            List<Checkin> hospedadosPresentes = checkinService.buscarTodosHospedados();
+            List<Checkin> hospedadosPresentes = checkinService.buscarTodosOsHospedesComCheckoutFalse();
             return ResponseEntity.ok(hospedadosPresentes);
         }catch (CheckinException e) {
             throw new CheckinException(e.getMessage());
@@ -65,9 +65,9 @@ public class CheckinController {
     }
 
     @GetMapping("/todos-hospedes-checkout")
-    public ResponseEntity<?> todosHospedesCheckout () {
+    public ResponseEntity<?> todosHospedesCheckout() {
         try {
-            List<Checkin> jaForamHospedados = checkinService.buscarTodosHospedesComCheckinEComCheckout();
+            List<Checkin> jaForamHospedados = checkinService.buscarTodosOsHospedesComCheckoutTrue();
             return ResponseEntity.ok(jaForamHospedados);
         }catch (CheckinException e) {
             throw new CheckinException(e.getMessage());
