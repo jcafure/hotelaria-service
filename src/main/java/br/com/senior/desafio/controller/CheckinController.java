@@ -34,6 +34,12 @@ public class CheckinController {
         }
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<?> checkinPeloId (@PathVariable("id") Integer id) {
+        Optional<Checkin> optionalBebida = checkinService.getCheckinPeloId(id);
+        return ResponseEntity.ok(optionalBebida.isPresent() ? optionalBebida.get() : "Checkin não encontrado! " );
+    }
+
     @PutMapping("/checkout")
     public ResponseEntity<?> checkout (@RequestBody Checkin checkin) {
         try {
