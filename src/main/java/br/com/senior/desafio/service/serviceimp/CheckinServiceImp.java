@@ -52,6 +52,13 @@ public class CheckinServiceImp implements CheckinService {
     }
 
     private void buildHistorico(Checkin checkin) {
+        Optional<Historico> historicoHospede = historicoRepository.getHistoricoByHospede(checkin.getHospede().getId());
+        if (historicoHospede.isPresent()) {
+            historicoHospede.get().setValorTotal(getValorTotalDeHospedagem(checkin));
+            historicoRepository.save(historicoHospede.get());
+        } else {
+
+        }
        historicoRepository.save(Historico.builder().valorTotal(getValorTotalDeHospedagem(checkin)).hospede(checkin.getHospede()).build());
 
     }
