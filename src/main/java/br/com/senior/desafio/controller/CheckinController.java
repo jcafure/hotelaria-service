@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -42,6 +43,18 @@ public class CheckinController {
             throw new CheckinException(e.getMessage());
         }catch (Exception e) {
             return new ResponseEntity<>("Houve um erro ao persistir os dados. ", HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @GetMapping("/todos-hospedados")
+    public ResponseEntity<?> todosHospedados () {
+        try {
+            List<Checkin> hospedadosPresentes = checkinService.buscarTodosHospedados();
+            return ResponseEntity.ok(hospedadosPresentes);
+        }catch (CheckinException e) {
+            throw new CheckinException(e.getMessage());
+        }catch (Exception e) {
+            return new ResponseEntity<>("Houve um erro na consulta dos hospedes que ainda não fizeram checkout. ", HttpStatus.BAD_REQUEST);
         }
     }
 

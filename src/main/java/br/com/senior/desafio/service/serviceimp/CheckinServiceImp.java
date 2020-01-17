@@ -74,6 +74,11 @@ public class CheckinServiceImp implements CheckinService {
         return checkinRepository.findById(id);
     }
 
+    @Override
+    public List<Checkin> buscarTodosHospedados() {
+        return checkinRepository.buscarTodosHospedados();
+    }
+
     private Checkin buildCheckin(Checkin checkin) {
 
         Optional<Hospede> hospedeOptional = hospedeService.recuperaHospedePeloId(checkin.getHospede().getId());
