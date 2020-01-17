@@ -16,6 +16,7 @@ import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -94,12 +95,11 @@ public class CheckinServiceImp implements CheckinService {
         } else {
             throw new HospedeException(checkin.getHospede().getId());
         }
-
+        checkin.setAdicionaVeiculo(checkin.isAdicionaVeiculo());
         checkin.setDataCheckin(checkin.getDataCheckin());
         if (checkin.getDataCheckout() != null) {
             checkin.setValorTotal(calcularValor(checkin));
         }
-        checkin.setAdicionaVeiculo(checkin.isAdicionaVeiculo());
         checkin.setCheckout(false);
 
         return checkin;
@@ -108,29 +108,37 @@ public class CheckinServiceImp implements CheckinService {
     private Double calcularValor(Checkin checkin) {
         LocalDateTime dataInicio = checkin.getDataCheckin();
         LocalDateTime dataFim = checkin.getDataCheckout();
-        List<LocalDateTime> diasHospedado = Stream.iterate(dataInicio, start -> start.plusDays(1)).limit(ChronoUnit.DAYS.between(dataInicio, dataFim)).collect(Collectors.toList());
+        List<LocalDateTime> diasHospedado = new ArrayList<>();
+        diasHospedado.add(dataInicio);
+        while (dataInicio.isBefore(dataFim)) {
+            diasHospedado.add(dataInicio.plusDays(1));
+            dataInicio = dataInicio.plusDays(1);
+        }
         Double valorFimDeSemana = valorDiariasFimDeSemana(diasHospedado, dataFim, checkin.isAdicionaVeiculo());
-        Double valorDeSemana = valorDiariasDaSemana(diasHospedado, checkin.isAdicionaVeiculo());
+        Double valorDeSemana = valorDiariasDaSemana(diasHospedado, dataFim, checkin.isAdicionaVeiculo());
 
         return valorFimDeSemana + valorDeSemana;
     }
 
     private Double valorDiariasFimDeSemana(List<LocalDateTime> diariasHospedagem, LocalDateTime dataFim, boolean adicionalVeiculo) {
-        Long diasFimDeSemana = diariasHospedagem.stream().filter(data -> DayOfWeek.SATURDAY.equals(data.getDayOfWeek())
-                && DayOfWeek.SUNDAY.equals(data.getDayOfWeek())).count();
+
+        int quantidadeFimSemana = diariasHospedagem.stream().filter(dia -> dia.getDayOfWeek().equals(DayOfWeek.SATURDAY)
+                || dia.getDayOfWeek().equals(DayOfWeek.SUNDAY)).collect(Collectors.toList()).size();
 
         boolean ultimoDiaDaDiaria = dataFim.toLocalTime().isAfter(LocalTime.parse("16:30:00"));
-        diasFimDeSemana = ultimoDiaDaDiaria ? diasFimDeSemana + 1 : diasFimDeSemana;
-        Double valorFimDeSemana = new Double(diasFimDeSemana * (adicionalVeiculo ? 150 + 20 : 150));
+        quantidadeFimSemana = ultimoDiaDaDiaria ? quantidadeFimSemana + 1 : quantidadeFimSemana;
+        Double valorFimDeSemana = new Double(quantidadeFimSemana * (adicionalVeiculo ? 150 + 20 : 150));
         return valorFimDeSemana;
-
     }
 
-    private Double valorDiariasDaSemana(List<LocalDateTime> diariasHospedagem, boolean adicionalVeiculo) {
-        Long diasDaSemana = diariasHospedagem.stream().filter(data -> !DayOfWeek.SATURDAY.equals(data.getDayOfWeek())
-                && !DayOfWeek.SUNDAY.equals(data.getDayOfWeek())).count();
+    private Double valorDiariasDaSemana(List<LocalDateTime> diariasHospedagem, LocalDateTime dataFim, boolean adicionalVeiculo) {
 
-        Double valorDiasDaSemana = new Double(diasDaSemana * (adicionalVeiculo ? 120 + 15 : 120));
+        int quantidadeDiaDeSemana = diariasHospedagem.stream().filter(dia -> !DayOfWeek.SATURDAY.equals(dia.getDayOfWeek())
+                || DayOfWeek.SUNDAY.equals(dia.getDayOfWeek())).collect(Collectors.toList()).size();
+
+        boolean ultimoDiaDiaria = dataFim.toLocalTime().isAfter(LocalTime.parse("16:30"));
+        quantidadeDiaDeSemana = ultimoDiaDiaria ? quantidadeDiaDeSemana + 1 : quantidadeDiaDeSemana;
+        Double valorDiasDaSemana = new Double(quantidadeDiaDeSemana * (adicionalVeiculo ? 120 + 15 : 120));
         return valorDiasDaSemana;
 
     }

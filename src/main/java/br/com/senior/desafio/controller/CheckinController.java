@@ -63,10 +63,4 @@ public class CheckinController {
             return new ResponseEntity<>("Houve um erro na consulta dos hospedes que ainda não fizeram checkout. ", HttpStatus.BAD_REQUEST);
         }
     }
-
-    @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<?> getModel() {
-        Checkin checinToJson = new Checkin();
-        return ResponseEntity.ok(checinToJson);
-    }
 }
