@@ -7,4 +7,6 @@ import java.util.Optional;
 public interface HistoricoService {
 
     Optional<Historico> getHistoricoPorHospede(Integer idHospede);
+
+    Double getValorTotalJaGastoPeloHospede(Integer idHospede);
 }

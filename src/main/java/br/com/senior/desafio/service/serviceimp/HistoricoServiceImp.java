@@ -31,4 +31,18 @@ public class HistoricoServiceImp implements HistoricoService {
         }
         return Optional.empty();
     }
+
+    @Override
+    public Double getValorTotalJaGastoPeloHospede(Integer idHospede) {
+        try {
+            Optional<Historico> historicoOptional = historicoRepository.getHistoricoByHospede(idHospede);
+            if (historicoOptional.isPresent()) {
+                return historicoRepository.getValorTotalJaGastoPeloHospede(idHospede);
+            } else {
+                throw new HistoricoException("Hospede Não encontrado");
+            }
+        }catch (HistoricoException e) {
+            throw new HistoricoException(e.getMessage());
+        }
+    }
 }

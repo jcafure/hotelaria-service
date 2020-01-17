@@ -12,4 +12,7 @@ public interface HistoricoRepository extends JpaRepository<Historico, Integer> {
 
     @Query("SELECT h from Historico h where h.hospede.id = ?1")
     Optional<Historico> getHistoricoByHospede(Integer hospedeId);
+
+    @Query("SELECT h.valorTotal FROM Historico h where h.hospede.id = ?1")
+    Double getValorTotalJaGastoPeloHospede(Integer idHospede);
 }
