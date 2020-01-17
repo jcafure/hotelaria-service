@@ -58,9 +58,9 @@ public class CheckinServiceImp implements CheckinService {
             historicoHospede.get().setValorTotal(getValorTotalDeHospedagem(checkin));
             historicoRepository.save(historicoHospede.get());
         } else {
-
+            historicoRepository.save(Historico.builder().valorTotal(getValorTotalDeHospedagem(checkin)).hospede(checkin.getHospede()).build());
         }
-       historicoRepository.save(Historico.builder().valorTotal(getValorTotalDeHospedagem(checkin)).hospede(checkin.getHospede()).build());
+
 
     }
 
@@ -95,6 +95,7 @@ public class CheckinServiceImp implements CheckinService {
         }else {
             throw new CheckinException("Não há dados para essa buscas");
         }
+
     }
 
     private Checkin buildCheckin(Checkin checkin) {
