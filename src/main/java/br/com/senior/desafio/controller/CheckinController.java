@@ -55,7 +55,8 @@ public class CheckinController {
     @GetMapping("/todos-hospedados")
     public ResponseEntity<?> todosHospedados() {
         try {
-            List<Checkin> hospedadosPresentes = checkinService.buscarTodosOsHospedesComCheckoutFalse();
+            //no caso os que fizeram checkin e estao no hotel
+            List<Checkin> hospedadosPresentes = checkinService.buscarTodosOsHospedesQueNaoFizeramCheckout();
             return ResponseEntity.ok(hospedadosPresentes);
         }catch (CheckinException e) {
             throw new CheckinException(e.getMessage());
@@ -67,7 +68,8 @@ public class CheckinController {
     @GetMapping("/todos-hospedes-checkout")
     public ResponseEntity<?> todosHospedesCheckout() {
         try {
-            List<Checkin> jaForamHospedados = checkinService.buscarTodosOsHospedesComCheckoutTrue();
+            //no caso os que fizeram checkin e ja nao estão no hotel
+            List<Checkin> jaForamHospedados = checkinService.buscarTodosOsHospedesQueJaFizeramCheckout();
             return ResponseEntity.ok(jaForamHospedados);
         }catch (CheckinException e) {
             throw new CheckinException(e.getMessage());

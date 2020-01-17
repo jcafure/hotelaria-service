@@ -16,8 +16,8 @@ public interface CheckinRepository extends JpaRepository<Checkin, Integer> {
     Double valorTotalDeHospedagensJaFeitas(Hospede hospede);
 
     @Query("SELECT c FROM Checkin c WHERE c.checkout = FALSE ")
-    List<Checkin> buscarTodosHospedados();
+    List<Checkin> buscarTodosOsHospedesQueNaoFizeramCheckout();
 
     @Query("SELECT c FROM Checkin c WHERE c.checkout = true")
-    List<Checkin> buscarTodosHospedesComCheckinEComCheckout();
+    List<Checkin> buscarTodosOsHospedesQueJaFizeramCheckout();
 }

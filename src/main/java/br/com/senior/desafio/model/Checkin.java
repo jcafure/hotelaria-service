@@ -5,8 +5,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
@@ -20,8 +18,6 @@ public class Checkin implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @NotEmpty(message = "Data de entrada é obrigatório")
-    @NotNull(message = "Data de entrada é obrigatório")
     @Column(name = "dataEntrada", nullable = false)
     private LocalDateTime dataCheckin;
 

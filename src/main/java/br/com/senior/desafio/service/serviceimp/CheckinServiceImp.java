@@ -15,12 +15,10 @@ import org.springframework.stereotype.Service;
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Service
 public class CheckinServiceImp implements CheckinService {
@@ -83,15 +81,15 @@ public class CheckinServiceImp implements CheckinService {
     }
 
     @Override
-    public List<Checkin> buscarTodosOsHospedesComCheckoutFalse() {
-        return checkinRepository.buscarTodosHospedados();
+    public List<Checkin> buscarTodosOsHospedesQueNaoFizeramCheckout() {
+        return checkinRepository.buscarTodosOsHospedesQueNaoFizeramCheckout();
     }
 
     @Override
-    public List<Checkin> buscarTodosOsHospedesComCheckoutTrue() {
-        List<Checkin> hospedesComCheckinECheckout = checkinRepository.buscarTodosHospedesComCheckinEComCheckout();
+    public List<Checkin> buscarTodosOsHospedesQueJaFizeramCheckout() {
+        List<Checkin> hospedesComCheckinECheckout = checkinRepository.buscarTodosOsHospedesQueJaFizeramCheckout();
         if (!hospedesComCheckinECheckout.isEmpty()) {
-            return checkinRepository.buscarTodosHospedesComCheckinEComCheckout();
+            return checkinRepository.buscarTodosOsHospedesQueJaFizeramCheckout();
         }else {
             throw new CheckinException("Não há dados para essa buscas");
         }
