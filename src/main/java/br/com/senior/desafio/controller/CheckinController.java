@@ -63,4 +63,16 @@ public class CheckinController {
             return new ResponseEntity<>("Houve um erro na consulta dos hospedes que ainda não fizeram checkout. ", HttpStatus.BAD_REQUEST);
         }
     }
+
+    @GetMapping("/todos-hospedes-checkout")
+    public ResponseEntity<?> todosHospedesCheckout () {
+        try {
+            List<Checkin> jaForamHospedados = checkinService.buscarTodosHospedesComCheckinEComCheckout();
+            return ResponseEntity.ok(jaForamHospedados);
+        }catch (CheckinException e) {
+            throw new CheckinException(e.getMessage());
+        }catch (Exception e) {
+            return new ResponseEntity<>("Houve um erro na consulta dos hospedes que já fizeram checkout. ", HttpStatus.BAD_REQUEST);
+        }
+    }
 }

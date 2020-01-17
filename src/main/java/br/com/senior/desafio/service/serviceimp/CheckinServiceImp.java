@@ -87,6 +87,16 @@ public class CheckinServiceImp implements CheckinService {
         return checkinRepository.buscarTodosHospedados();
     }
 
+    @Override
+    public List<Checkin> buscarTodosHospedesComCheckinEComCheckout() {
+        List<Checkin> hospedesComCheckinECheckout = checkinRepository.buscarTodosHospedesComCheckinEComCheckout();
+        if (!hospedesComCheckinECheckout.isEmpty()) {
+            return checkinRepository.buscarTodosHospedesComCheckinEComCheckout();
+        }else {
+            throw new CheckinException("Não há dados para essa buscas");
+        }
+    }
+
     private Checkin buildCheckin(Checkin checkin) {
 
         Optional<Hospede> hospedeOptional = hospedeService.recuperaHospedePeloId(checkin.getHospede().getId());

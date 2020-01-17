@@ -16,4 +16,6 @@ public interface CheckinService {
 
     List<Checkin> buscarTodosHospedados();
 
+    List<Checkin> buscarTodosHospedesComCheckinEComCheckout();
+
 }
