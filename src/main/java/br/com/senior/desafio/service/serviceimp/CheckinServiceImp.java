@@ -1,9 +1,12 @@
 package br.com.senior.desafio.service.serviceimp;
 
+import br.com.senior.desafio.exception.CheckinException;
 import br.com.senior.desafio.exception.HospedeException;
 import br.com.senior.desafio.model.Checkin;
+import br.com.senior.desafio.model.Historico;
 import br.com.senior.desafio.model.Hospede;
 import br.com.senior.desafio.repository.CheckinRepository;
+import br.com.senior.desafio.repository.HistoricoRepository;
 import br.com.senior.desafio.service.CheckinService;
 import br.com.senior.desafio.service.HospedeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,31 +26,69 @@ public class CheckinServiceImp implements CheckinService {
 
     private final CheckinRepository checkinRepository;
     private final HospedeService hospedeService;
+    private final HistoricoRepository historicoRepository;
 
     @Autowired
-    public CheckinServiceImp(CheckinRepository checkinRepository, HospedeService hospedeService) {
+    public CheckinServiceImp(CheckinRepository checkinRepository, HospedeService hospedeService, HistoricoRepository historicoRepository) {
         this.checkinRepository = checkinRepository;
         this.hospedeService = hospedeService;
+        this.historicoRepository = historicoRepository;
     }
 
     @Override
-    public Optional<Checkin> createCheckin(Checkin checkin) {
-
+    public Optional<Checkin> checkinEntrada(Checkin checkin) {
         return Optional.of(checkinRepository.save(buildCheckin(checkin)));
+    }
+
+    @Override
+    public Optional<Checkin> checkinSaida(Checkin checkin) {
+        Optional<Checkin> checkout = getCheckinPeloId(checkin.getId());
+            if (checkout.isPresent()) {
+                buildCheckout(checkout.get());
+            } else {
+                throw new CheckinException("Não foi encontrado nenhuma reserva");
+            }
+        return Optional.of(checkout.get());
+    }
+
+    private void buildHistorico(Checkin checkin) {
+       historicoRepository.save(Historico.builder().valorTotal(getValorTotalDeHospedagem(checkin)).hospede(checkin.getHospede()).build());
+
+    }
+
+    private double getValorTotalDeHospedagem(Checkin checkin) {
+        return checkinRepository.valorTotalDeHospedagensJaFeitas(checkin.getHospede());
+    }
+
+    private void buildCheckout(Checkin checkin) {
+        checkin.setDataCheckout(checkin.getDataCheckout());
+        checkin.setAdicionaVeiculo(checkin.isAdicionaVeiculo());
+        checkin.setValorTotal(calcularValor(checkin));
+        checkin.setCheckout(true);
+        checkinRepository.save(checkin);
+        buildHistorico(checkin);
+    }
+
+    @Override
+    public Optional<Checkin> getCheckinPeloId(Integer id) {
+        return checkinRepository.findById(id);
     }
 
     private Checkin buildCheckin(Checkin checkin) {
 
         Optional<Hospede> hospedeOptional = hospedeService.recuperaHospedePeloId(checkin.getHospede().getId());
         if (hospedeOptional.isPresent()) {
-            checkin.setHospede(hospedeOptional.isPresent() ? hospedeOptional.get() : null);
+            checkin.setHospede(hospedeOptional.get());
         } else {
             throw new HospedeException(checkin.getHospede().getId());
         }
 
         checkin.setDataCheckin(checkin.getDataCheckin());
-        checkin.setDataCheckout(checkin.getDataCheckout());
+        if (checkin.getDataCheckout() != null) {
+            checkin.setValorTotal(calcularValor(checkin));
+        }
         checkin.setAdicionaVeiculo(checkin.isAdicionaVeiculo());
+        checkin.setCheckout(false);
 
         return checkin;
     }
@@ -73,14 +114,12 @@ public class CheckinServiceImp implements CheckinService {
 
     }
 
-
     private Double valorDiariasDaSemana(List<LocalDateTime> diariasHospedagem, boolean adicionalVeiculo) {
         Long diasDaSemana = diariasHospedagem.stream().filter(data -> !DayOfWeek.SATURDAY.equals(data.getDayOfWeek())
                 && !DayOfWeek.SUNDAY.equals(data.getDayOfWeek())).count();
 
         Double valorDiasDaSemana = new Double(diasDaSemana * (adicionalVeiculo ? 120 + 15 : 120));
         return valorDiasDaSemana;
-
 
     }
 

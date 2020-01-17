@@ -6,9 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Data
 @NoArgsConstructor
@@ -35,12 +33,4 @@ public class Checkin implements Serializable {
     private boolean adicionaVeiculo;
 
     private boolean checkout;
-//
-//    public boolean isAdicionaVeiculo() {
-//        return adicionaVeiculo;
-//    }
-//
-//    public void setAdicionaVeiculo(boolean adicionaVeiculo) {
-//        this.adicionaVeiculo = adicionaVeiculo;
-//    }
 }

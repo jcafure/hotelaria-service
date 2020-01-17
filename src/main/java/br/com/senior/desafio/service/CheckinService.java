@@ -7,5 +7,10 @@ import java.util.Optional;
 
 public interface CheckinService {
 
-    Optional<Checkin> createCheckin(Checkin checkin);
+    Optional<Checkin> checkinEntrada(Checkin checkin);
+
+    Optional<Checkin> checkinSaida(Checkin checkin);
+
+    Optional<Checkin> getCheckinPeloId(Integer id);
+
 }

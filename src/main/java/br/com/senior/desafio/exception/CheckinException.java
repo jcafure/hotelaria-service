@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 public class CheckinException extends RuntimeException {
 
     public CheckinException(String message) {
-        super(message);
+        super("Houve um erro na persistência dos dados. ");
     }
 
 }
