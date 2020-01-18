@@ -13,7 +13,7 @@ import java.util.List;
 public interface CheckinRepository extends JpaRepository<Checkin, Integer> {
 
     @Query("SELECT SUM (c.valorTotal) from Checkin c WHERE c.hospede = ?1 AND c.checkout = TRUE")
-    Double valorTotalDeHospedagensJaFeitas(Hospede hospede);
+    Double valorTotalDeHospedagensJaFeitasPeloHospede(Hospede hospede);
 
     @Query("SELECT c FROM Checkin c WHERE c.checkout = FALSE ")
     List<Checkin> buscarTodosOsHospedesQueNaoFizeramCheckout();

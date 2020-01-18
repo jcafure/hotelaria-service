@@ -12,7 +12,6 @@ import br.com.senior.desafio.service.HospedeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.text.DecimalFormat;
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -62,7 +61,7 @@ public class CheckinServiceImp implements CheckinService {
     }
 
     private double getValorTotalDeHospedagem(Checkin checkin) {
-        return checkinRepository.valorTotalDeHospedagensJaFeitas(checkin.getHospede());
+        return checkinRepository.valorTotalDeHospedagensJaFeitasPeloHospede(checkin.getHospede());
     }
 
     private void buildCheckout(Checkin checkin) {
