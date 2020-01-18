@@ -20,4 +20,8 @@ public interface CheckinRepository extends JpaRepository<Checkin, Integer> {
 
     @Query("SELECT c FROM Checkin c WHERE c.checkout = true")
     List<Checkin> buscarTodosOsHospedesQueJaFizeramCheckout();
+
+    @Query("SELECT c FROM Checkin c where c.hospede.id = ?1 and c.checkout = TRUE ORDER BY c.id DESC")
+    List<Checkin> buscarUltimoValorTotalHospede(Integer idHospede);
+
 }

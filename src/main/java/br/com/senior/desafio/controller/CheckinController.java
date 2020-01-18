@@ -77,4 +77,16 @@ public class CheckinController {
             return new ResponseEntity<>("Houve um erro na consulta dos hospedes que já fizeram checkout. ", HttpStatus.BAD_REQUEST);
         }
     }
+
+    @GetMapping("/ultimio-valor-hospede/{id}")
+    public ResponseEntity<?> ultimoValorHospede(@PathVariable("id") Integer id) {
+        try {
+           Double ultimoValor = checkinService.ultimoValorGastoPeloHospede(id);
+            return ResponseEntity.ok(ultimoValor);
+        }catch (CheckinException e) {
+            throw new CheckinException(e.getMessage());
+        }catch (Exception e) {
+            return new ResponseEntity<>("Houve um erro na consulta dos hospedes que já fizeram checkout. ", HttpStatus.BAD_REQUEST);
+        }
+    }
 }

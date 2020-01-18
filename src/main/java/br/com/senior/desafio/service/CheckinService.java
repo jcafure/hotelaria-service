@@ -18,4 +18,6 @@ public interface CheckinService {
 
     List<Checkin> buscarTodosOsHospedesQueJaFizeramCheckout();
 
+    Double ultimoValorGastoPeloHospede(Integer idHospede);
+
 }

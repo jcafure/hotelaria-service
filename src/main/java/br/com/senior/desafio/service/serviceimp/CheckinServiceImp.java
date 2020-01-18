@@ -152,4 +152,14 @@ public class CheckinServiceImp implements CheckinService {
 
     }
 
-}
+    @Override
+    public Double ultimoValorGastoPeloHospede(Integer idHospede) {
+
+        double ultimoValor = 0.0;
+        List<Checkin> checkins = checkinRepository.buscarUltimoValorTotalHospede(idHospede);
+        Checkin checkin = checkins.get(0);
+        return ultimoValor = checkin.getValorTotal();
+
+    }
+
+  }
