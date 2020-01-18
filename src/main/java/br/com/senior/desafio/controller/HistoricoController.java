@@ -2,6 +2,7 @@ package br.com.senior.desafio.controller;
 
 import br.com.senior.desafio.exception.HistoricoException;
 import br.com.senior.desafio.service.HistoricoService;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,6 +21,7 @@ public class HistoricoController {
         this.historicoService = historicoService;
     }
 
+    @ApiOperation("valor total já gasto pelo hóspede no hotel. ")
     @GetMapping("/busca-valor-total/{idHospede}")
     public ResponseEntity<?> checkinPeloId(@PathVariable("idHospede") Integer idHospede) {
         try {

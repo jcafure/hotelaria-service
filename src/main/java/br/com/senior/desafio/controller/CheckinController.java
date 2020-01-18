@@ -3,6 +3,7 @@ package br.com.senior.desafio.controller;
 import br.com.senior.desafio.exception.CheckinException;
 import br.com.senior.desafio.model.Checkin;
 import br.com.senior.desafio.service.CheckinService;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +24,7 @@ public class CheckinController {
     }
 
     @PostMapping("/checkin-entrada")
+    @ApiOperation("Permiti fazer o checkin. Caso a data checkout estiver preenchida é gerado o cálculo.")
     public ResponseEntity<?> checkin(@RequestBody Checkin checkin) {
         try {
             Optional<Checkin> checkinResponse = checkinService.checkinEntrada(checkin);
@@ -40,6 +42,7 @@ public class CheckinController {
         return ResponseEntity.ok(optionalBebida.isPresent() ? optionalBebida.get() : "Checkin não encontrado! " );
     }
 
+    @ApiOperation("No checkout será gerado o valor total da hospedagem. Quando a data de saida é preenchida o service fara o cálculo da hospedagem.")
     @PutMapping("/checkout")
     public ResponseEntity<?> checkout(@RequestBody Checkin checkin) {
         try {
@@ -52,10 +55,10 @@ public class CheckinController {
         }
     }
 
+    @ApiOperation("Consultar hóspedes que ainda estão no hotel.")
     @GetMapping("/todos-hospedados")
     public ResponseEntity<?> todosHospedados() {
         try {
-            //no caso os que fizeram checkin e estao no hotel
             List<Checkin> hospedadosPresentes = checkinService.buscarTodosOsHospedesQueNaoFizeramCheckout();
             return ResponseEntity.ok(hospedadosPresentes);
         }catch (CheckinException e) {
@@ -65,10 +68,10 @@ public class CheckinController {
         }
     }
 
+    @ApiOperation("Consultar hóspedes que já realizaram o check in e não estão mais no hotel.")
     @GetMapping("/todos-hospedes-checkout")
     public ResponseEntity<?> todosHospedesCheckout() {
         try {
-            //no caso os que fizeram checkin e ja nao estão no hotel
             List<Checkin> jaForamHospedados = checkinService.buscarTodosOsHospedesQueJaFizeramCheckout();
             return ResponseEntity.ok(jaForamHospedados);
         }catch (CheckinException e) {
@@ -78,7 +81,8 @@ public class CheckinController {
         }
     }
 
-    @GetMapping("/ultimio-valor-hospede/{id}")
+    @ApiOperation("valor da última hospedagem já gasto pelo hóspede no hotel.")
+    @GetMapping("/ultimo-valor-hospede/{id}")
     public ResponseEntity<?> ultimoValorHospede(@PathVariable("id") Integer id) {
         try {
            Double ultimoValor = checkinService.ultimoValorGastoPeloHospede(id);
