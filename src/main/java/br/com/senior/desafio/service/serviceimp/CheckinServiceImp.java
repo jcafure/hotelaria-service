@@ -41,7 +41,9 @@ public class CheckinServiceImp implements CheckinService {
 
     @Override
     public Optional<Checkin> checkinSaida(Checkin checkin) {
+
         Optional<Checkin> checkout = getCheckinPeloId(checkin.getId());
+
             if (checkout.isPresent()) {
                 buildCheckout(checkout.get());
             } else {
@@ -116,6 +118,9 @@ public class CheckinServiceImp implements CheckinService {
         LocalDateTime dataInicio = checkin.getDataCheckin();
         LocalDateTime dataFim = checkin.getDataCheckout();
         List<LocalDateTime> diasHospedado = new ArrayList<>();
+        if (dataFim == null){
+            dataFim = LocalDateTime.now();
+        }
         diasHospedado.add(dataInicio);
         while (dataInicio.isBefore(dataFim)) {
             diasHospedado.add(dataInicio.plusDays(1));
