@@ -12,6 +12,7 @@ import br.com.senior.desafio.service.HospedeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.DecimalFormat;
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -58,8 +59,6 @@ public class CheckinServiceImp implements CheckinService {
         } else {
             historicoRepository.save(Historico.builder().valorTotal(getValorTotalDeHospedagem(checkin)).hospede(checkin.getHospede()).build());
         }
-
-
     }
 
     private double getValorTotalDeHospedagem(Checkin checkin) {
@@ -155,10 +154,10 @@ public class CheckinServiceImp implements CheckinService {
     @Override
     public Double ultimoValorGastoPeloHospede(Integer idHospede) {
 
-        double ultimoValor = 0.0;
         List<Checkin> checkins = checkinRepository.buscarUltimoValorTotalHospede(idHospede);
-        Checkin checkin = checkins.get(0);
-        return ultimoValor = checkin.getValorTotal();
+
+        Checkin checkin = checkins.stream().findFirst().get();
+        return checkin.getValorTotal();
 
     }
 
