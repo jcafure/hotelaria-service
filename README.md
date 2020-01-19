@@ -110,4 +110,25 @@ saída esperada:
      "adicionaVeiculo": true,
      "checkout": false
    }
+   
+Consultar hóspedes que já realizaram o check in e não estão mais no hotel:
+
+    curl -X GET "http://localhost:9000/hotelaria/v1/checkins/todos-hospedes-checkout" -H "accept: */*"
+   
+saída esperada: 
+
+     [
+       {
+        "id": 4,
+    "dataCheckin": "2019-12-16T19:00:00",
+    "dataCheckout": "2019-12-20T19:00:00",
+    "valorTotal": 710,
+    "hospede": {
+      "id": 3,
+      "nome": "Bruno",
+      "documento": "789546",
+      "telefone": "99524599"
+     }
+     ]
+
  
