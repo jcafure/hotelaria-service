@@ -68,9 +68,46 @@ aplicação irá subir em um tomcat embedded.
     $ java -jar hotelaria-service-0.0.1-SNAPSHOT.jar
     
     Configuração da porta da api se encontra no application.yml:
-    
-server:
   port: 9000
     
     Após iniciar aplicação a documentação gerada com Swagger estará disponível automaticamente no endereço:
         http://localhost:9000/hotelaria/v1/swagger-ui.html#/
+        
+ # `Exemplos:`
+
+Inserção de Hóspede:
+
+         curl -X POST "http://localhost:9000/hotelaria/v1/hospedes/novo-hospede" -H "accept: */*" -H "Content-Type:        application/json" -d "{ \"documento\": \"123456\", \"id\": 0, \"nome\": \"Jaime A\", \"telefone\": \"92001578\"}"
+         
+saída esperada:
+
+
+         {
+        "id": 12,
+        "nome": "Jaime A",
+        "documento": "123456",
+        "telefone": "92001578"
+      }
+      
+Inserção de Checkin:
+   
+    curl -X POST "http://localhost:9000/hotelaria/v1/checkins/checkin-entrada" -H "accept: */*" -H "Content-Type: application/json" -d "{ \"adicionaVeiculo\": true, \"checkout\": true, \"dataCheckin\": \"2020-01-19T18:51:07.830Z\", \"dataCheckout\": \"2020-01-22T18:51:07.830Z\", \"hospede\": { \"documento\": \"string\", \"id\": 12, \"nome\": \"string\", \"telefone\": \"string\" }, \"id\": 0, \"valorTotal\": 0}"
+    
+saída esperada: 
+
+
+     {
+     "id": 11,
+     "dataCheckin": "2020-01-19T18:51:07.83",
+     "dataCheckout": "2020-01-22T18:51:07.83",
+     "valorTotal": 1015,
+     "hospede": {
+       "id": 12,
+       "nome": "Jaime A",
+       "documento": "123456",
+       "telefone": "92001578"
+     },
+     "adicionaVeiculo": true,
+     "checkout": false
+   }
+ 
