@@ -11,13 +11,13 @@ spring:
       hibernate:
         #dialect: org.hibernate.dialect.MySQL5Dialect
         dialect: org.hibernate.dialect.PostgreSQLDialect
-        show_sql: true
+        show_sql: false
         use_sql_comments: true
         format_sql: true
         type: trace
   datasource:
     #driver-class-name: com.mysql.cj.jdbc.Driver
-    url: ${JDBC_DATASOURCE_URL}
+    url: ${DATABASE_URL}
     #url: jdbc:mysql://localhost:3306/desafio-hotel?useTimezone=true&serverTimezone=UTC
 #    username: root
 #    password: root
