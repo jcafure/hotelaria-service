@@ -8,7 +8,7 @@ hóspedes e o check in.
 Queremos ver como você resolve problemas no seu dia-a-dia. Não há necessidade de
 desenvolver o frontend da aplicação, vamos utilizar o Postman para testar sua aplicação.
 
-### `Requisitos Funcionais`
+ `Requisitos Funcionais`
 
     • Um CRUDL para o cadastro de hóspedes;
     • No check in deve ser possível buscar hóspedes cadastrados pelo nome, documento ou telefone;
@@ -16,7 +16,7 @@ desenvolver o frontend da aplicação, vamos utilizar o Postman para testar sua 
     • Consultar hóspedes que ainda estão no hotel;
     • As consultas devem apresentar o valor (valor total e o valor da última hospedagem) já gasto pelo hóspede no hotel.
     
-    ### `Regras de negócio` 
+    `Regras de negócio` 
 
     • Uma diária no hotel de segunda à sexta custa R$120,00;
     • Uma diária no hotel em finais de semana custa R$150,00;
@@ -24,7 +24,7 @@ desenvolver o frontend da aplicação, vamos utilizar o Postman para testar sua 
       sendo R$15,00 de segunda à sexta e R$20,00 nos finais de semana;
     • Caso o horário da saída seja após às 16:30h deve ser cobrada uma diária extra.
     
-    ### `Expectativas` 
+     `Expectativas` 
 
     • Desenvolva um sistema em Java, com banco de dados PostgreSQL e serviços Rest.
     • Desenvolva o problema utilizando frameworks, bibliotecas e/ou componentes que você
@@ -71,8 +71,6 @@ aplicação irá subir em um tomcat embedded.
     
 server:
   port: 9000
-  servlet:
-    context-path: /hotelaria/v1
     
     Após iniciar aplicação a documentação gerada com Swagger estará disponível automaticamente no endereço:
         http://localhost:9000/hotelaria/v1/swagger-ui.html#/
