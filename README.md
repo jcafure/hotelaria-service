@@ -130,5 +130,10 @@ saída esperada:
       "telefone": "99524599"
      }
      ]
+     
+valor da última hospedagem já gasto pelo hóspede no hotel.
 
+    curl -X GET "http://localhost:9000/hotelaria/v1/checkins/ultimo-valor-hospede/1" -H "accept: */*"
+saida esperada:
+   390
  
