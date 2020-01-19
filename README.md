@@ -40,7 +40,7 @@ Tecnologias utilizadas :
 
  - Spring Boot.
  - Gerenciador de dependencias e build, Maven.
- - Banco de dados Mysql.
+ - Banco de dados Postgresql.
  - Lombok
  - Swagger para a geração da documentação. 
  - Interface de comunicação REST.
@@ -72,6 +72,12 @@ aplicação irá subir em um tomcat embedded.
     
     Após iniciar aplicação a documentação gerada com Swagger estará disponível automaticamente no endereço:
         http://localhost:9000/hotelaria/v1/swagger-ui.html#/
+        
+         datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/desafiohotel
+    username: postgres
+    password: root
         
  # `Exemplos:`
 
