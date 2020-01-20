@@ -1,3 +1,4 @@
+
 # Desafio Backend
 
 ## `Proposta:`
@@ -44,7 +45,10 @@ Tecnologias utilizadas :
  - Lombok
  - Swagger para a geração da documentação. 
  - Interface de comunicação REST.
- 
+
+##  Link API Heroku
+https://hotelaria-service.herokuapp.com/hotelaria/v1/swagger-ui.html
+
  ## `Requisitos do sistema`
 
 Requisitos
