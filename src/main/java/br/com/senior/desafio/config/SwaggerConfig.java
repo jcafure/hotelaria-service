@@ -28,8 +28,8 @@ public class SwaggerConfig {
 
     private ApiInfo apiInfo() {
 
-        return new ApiInfo("API - Depósito de Bebidas",
-                "Api para controle de estoque de bebidas.",
+        return new ApiInfo("Desafio Senior",
+                "Api para controle de checkin e checkout de um hotel.",
                 "Documentação v1.0",
                 null,
                 null,
